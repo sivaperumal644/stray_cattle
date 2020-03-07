@@ -13,7 +13,7 @@ class PrimaryButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: double.infinity,
+      width: MediaQuery.of(context).size.width,
       child: RaisedButton(
         padding: EdgeInsets.only(top: 12, bottom: 12),
         color: BLUEBERRY_COLOR,

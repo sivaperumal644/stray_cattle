@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 
-class HeaderText extends StatelessWidget {
+class ContentText extends StatelessWidget {
   final String text;
-
-  const HeaderText({
+  const ContentText({
     this.text,
   });
 
@@ -11,10 +10,10 @@ class HeaderText extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       text,
+      textAlign: TextAlign.center,
       style: TextStyle(
         color: Colors.white,
-        fontWeight: FontWeight.bold,
-        fontSize: 24,
+        fontSize: 16,
       ),
     );
   }
