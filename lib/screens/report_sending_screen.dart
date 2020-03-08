@@ -7,14 +7,30 @@ class ReportSendingScreen extends StatefulWidget {
 }
 
 class _ReportSendingScreenState extends State<ReportSendingScreen> {
+  bool isReported = false;
+  String headerText = "We’re sending your report, please wait...";
+  String contentText = "This may take a moment";
+
+  @override
+  void initState() {
+    super.initState();
+    Future.delayed(const Duration(seconds: 5), () {
+      setState(() {
+        isReported = true;
+        headerText = "Your report has been submitted.";
+        contentText = "We are working on it. Thank you for helping!";
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
       body: ReportSendingContainer(
-        headerText: "We’re sending your report, please wait...",
-        contextText: "This may take a moment",
-        isReported: true,
+        headerText: headerText,
+        contextText: contentText,
+        isReported: isReported,
       ),
     );
   }
