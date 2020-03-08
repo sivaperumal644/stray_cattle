@@ -1,4 +1,5 @@
 import 'package:citizen_watch/components/login_container.dart';
+import 'package:citizen_watch/screens/welcome_back_screen.dart';
 import 'package:flutter/material.dart';
 
 class NewAccountScreen extends StatelessWidget {
@@ -24,7 +25,7 @@ class NewAccountScreen extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => NewAccountScreen(),
+                  builder: (context) => WelcomeBackScreen(),
                 ),
               );
             },
