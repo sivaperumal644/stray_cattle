@@ -7,9 +7,7 @@ class NewAccountScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
-      appBar: AppBar(
-        backgroundColor: Colors.black,
-      ),
+      appBar: AppBar(backgroundColor: Colors.black),
       body: ListView(
         children: <Widget>[
           Container(height: 50),

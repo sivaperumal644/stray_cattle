@@ -1,4 +1,5 @@
 import 'package:citizen_watch/components/login_container.dart';
+import 'package:citizen_watch/screens/about_app_screen.dart';
 import 'package:flutter/material.dart';
 
 class WelcomeBackScreen extends StatelessWidget {
@@ -6,9 +7,7 @@ class WelcomeBackScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
-      appBar: AppBar(
-        backgroundColor: Colors.black,
-      ),
+      appBar: AppBar(backgroundColor: Colors.black),
       body: ListView(
         children: <Widget>[
           Container(height: 50),
@@ -17,7 +16,14 @@ class WelcomeBackScreen extends StatelessWidget {
             contentTextOne: "Please enter your password to continue",
             contentTextTwo: "",
             hintTextOne: "Password",
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => AboutAppScreen(),
+                ),
+              );
+            },
           )
         ],
       ),
