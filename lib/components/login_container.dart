@@ -57,6 +57,7 @@ class LoginContainer extends StatelessWidget {
             PrimaryButton(
               buttonText: "Continue",
               onPressed: onPressed,
+              width: MediaQuery.of(context).size.width,
             ),
             Container(height: 45)
           ],

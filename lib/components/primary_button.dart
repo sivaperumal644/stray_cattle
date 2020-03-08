@@ -4,16 +4,19 @@ import 'package:flutter/material.dart';
 class PrimaryButton extends StatelessWidget {
   final String buttonText;
   final Function onPressed;
+  final double width;
 
   const PrimaryButton({
     this.buttonText,
-    this.onPressed,
+    this.onPressed, 
+    this.width,
+    
   });
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: MediaQuery.of(context).size.width,
+      width: width,
       child: RaisedButton(
         padding: EdgeInsets.only(top: 12, bottom: 12),
         color: BLUEBERRY_COLOR,

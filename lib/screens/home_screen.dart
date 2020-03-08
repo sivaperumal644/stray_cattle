@@ -1,6 +1,7 @@
 import 'package:citizen_watch/components/report_button.dart';
 import 'package:citizen_watch/components/secondary_button.dart';
 import 'package:citizen_watch/screens/about_app_screen.dart';
+import 'package:citizen_watch/screens/report_screen.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -8,7 +9,7 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Colors.black,
-        body: Column(
+        body: ListView(
           children: <Widget>[
             Container(
               height: MediaQuery.of(context).size.height / 1.25,
@@ -54,7 +55,14 @@ class HomeScreen extends StatelessWidget {
                   Container(height: 20),
                   ReportButton(
                     buttonText: "REPORT IT",
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => ReportScreen(),
+                        ),
+                      );
+                    },
                   ),
                   Spacer(),
                   SecondaryButton(
