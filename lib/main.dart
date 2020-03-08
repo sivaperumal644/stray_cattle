@@ -1,13 +1,16 @@
 import 'package:citizen_watch/screens/auth_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-main() => runApp(MyApp());
+import 'components/busy_indicator_wrapper.dart';
+import 'constants/app_state.dart';
 
-class MyApp extends StatelessWidget{
+main() => runApp(ChangeNotifierProvider<AppState>(
+    create: (context) => AppState(), child: MyApp()));
+
+class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: AuthScreen()
-    );
+    return BusyIndicatorWidget(child: MaterialApp(home: AuthScreen()));
   }
 }

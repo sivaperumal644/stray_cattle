@@ -4,14 +4,14 @@ import 'content_text.dart';
 import 'custom_text_field.dart';
 import 'header_text.dart';
 
-class LoginContainer extends StatelessWidget {
+class LoginContainer extends StatefulWidget {
   final String headerText;
   final String contentTextOne;
   final String contentTextTwo;
   final String hintTextOne;
   final String hintTextTwo;
   final bool isNewAccount;
-  final Function onPressed;
+  final Function(String phone) onPressed;
 
   const LoginContainer({
     this.headerText,
@@ -22,6 +22,20 @@ class LoginContainer extends StatelessWidget {
     this.hintTextTwo,
     this.isNewAccount = false,
   });
+
+  @override
+  _LoginContainerState createState() => _LoginContainerState();
+}
+
+class _LoginContainerState extends State<LoginContainer> {
+  final myController = TextEditingController();
+
+  @override
+  void dispose() {
+    // Clean up the controller when the widget is disposed.
+    myController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -40,23 +54,26 @@ class LoginContainer extends StatelessWidget {
           children: <Widget>[
             Container(height: 32),
             HeaderText(
-              text: headerText,
+              text: widget.headerText,
             ),
             Container(height: 64),
-            ContentText(text: contentTextOne),
+            ContentText(text: widget.contentTextOne),
             Container(height: 16),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: ContentText(text: contentTextTwo),
+              child: ContentText(text: widget.contentTextTwo),
             ),
             Container(height: 125),
-            CustomTextField(hintText: hintTextOne),
+            CustomTextField(hintText: widget.hintTextOne),
             Container(height: 20),
-            isNewAccount ? CustomTextField(hintText: hintTextTwo) : Container(),
-            isNewAccount ? Container(height: 20) : Container(),
+            widget.isNewAccount
+                ? CustomTextField(
+                    hintText: widget.hintTextTwo, controller: myController)
+                : Container(),
+            widget.isNewAccount ? Container(height: 20) : Container(),
             PrimaryButton(
               buttonText: "Continue",
-              onPressed: onPressed,
+              onPressed: () => {widget.onPressed(myController.text)},
               width: MediaQuery.of(context).size.width,
             ),
             Container(height: 45)

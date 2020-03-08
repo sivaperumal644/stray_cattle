@@ -3,6 +3,9 @@ import 'package:citizen_watch/screens/welcome_back_screen.dart';
 import 'package:flutter/material.dart';
 
 class NewAccountScreen extends StatelessWidget {
+  final phone;
+
+  const NewAccountScreen({Key key, this.phone}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
