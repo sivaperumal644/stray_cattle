@@ -1,5 +1,6 @@
 import 'package:citizen_watch/components/primary_button.dart';
 import 'package:citizen_watch/components/tertiary_button.dart';
+import 'package:citizen_watch/screens/report_sending_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -63,7 +64,20 @@ class _ReportScreenState extends State<ReportScreen> {
                       Container(width: 30, height: 0),
                       PrimaryButton(
                         buttonText: "Continue",
-                        onPressed: () {},
+                        onPressed: () {
+                          SystemChrome.setPreferredOrientations([
+                            DeviceOrientation.landscapeLeft,
+                            DeviceOrientation.landscapeRight,
+                            DeviceOrientation.portraitDown,
+                            DeviceOrientation.portraitUp
+                          ]);
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => ReportSendingScreen(),
+                            ),
+                          );
+                        },
                         width: 120,
                       ),
                     ],
@@ -77,5 +91,3 @@ class _ReportScreenState extends State<ReportScreen> {
     );
   }
 }
-
-
