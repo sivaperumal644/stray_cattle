@@ -11,7 +11,7 @@ class LoginContainer extends StatefulWidget {
   final String hintTextOne;
   final String hintTextTwo;
   final bool isNewAccount;
-  final Function(String phone) onPressed;
+  final Function onPressed;
 
   const LoginContainer({
     this.headerText,
@@ -73,7 +73,7 @@ class _LoginContainerState extends State<LoginContainer> {
             widget.isNewAccount ? Container(height: 20) : Container(),
             PrimaryButton(
               buttonText: "Continue",
-              onPressed: () => {widget.onPressed(myController.text)},
+              onPressed: widget.onPressed,
               width: MediaQuery.of(context).size.width,
             ),
             Container(height: 45)
