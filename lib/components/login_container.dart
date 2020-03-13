@@ -12,6 +12,8 @@ class LoginContainer extends StatefulWidget {
   final String hintTextTwo;
   final bool isNewAccount;
   final Function onPressed;
+  final ValueChanged<String> onChangedOne;
+  final ValueChanged<String> onChangedTwo;
 
   const LoginContainer({
     this.headerText,
@@ -21,6 +23,8 @@ class LoginContainer extends StatefulWidget {
     this.hintTextOne,
     this.hintTextTwo,
     this.isNewAccount = false,
+    this.onChangedOne,
+    this.onChangedTwo,
   });
 
   @override
@@ -28,12 +32,9 @@ class LoginContainer extends StatefulWidget {
 }
 
 class _LoginContainerState extends State<LoginContainer> {
-  final myController = TextEditingController();
-
   @override
   void dispose() {
     // Clean up the controller when the widget is disposed.
-    myController.dispose();
     super.dispose();
   }
 
@@ -64,11 +65,16 @@ class _LoginContainerState extends State<LoginContainer> {
               child: ContentText(text: widget.contentTextTwo),
             ),
             Container(height: 125),
-            CustomTextField(hintText: widget.hintTextOne),
+            CustomTextField(
+              hintText: widget.hintTextOne,
+              onChanged: widget.onChangedOne,
+            ),
             Container(height: 20),
             widget.isNewAccount
                 ? CustomTextField(
-                    hintText: widget.hintTextTwo, controller: myController)
+                    hintText: widget.hintTextTwo,
+                    onChanged: widget.onChangedTwo,
+                  )
                 : Container(),
             widget.isNewAccount ? Container(height: 20) : Container(),
             PrimaryButton(

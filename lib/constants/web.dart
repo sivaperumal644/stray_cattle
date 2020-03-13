@@ -44,7 +44,22 @@ Future<String> runLoginRequest(
   } else {
     if (responseData['error']['code'] == 'USER_DOES_NOT_EXIST') {
       onUserNotExist();
+      return responseData['error']['code'];
     }
+  }
+  return null;
+}
+
+Future<String> runRegisterRequest(
+    {String phone, String password}) async {
+  print('=== Sending REGISTER REQUEST ===');
+  http.Response response = await http.post('$BASE_URL/auth/register',
+      body: {'phone': phone, 'password': password});
+  print('Response status: ${response.statusCode}');
+  print('Response body: ${response.body}');
+  var responseData = jsonDecode(response.body);
+  if (responseData['error'] == null) {
+    return responseData['data']['jwt'];
   }
   return null;
 }

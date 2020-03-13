@@ -1,13 +1,28 @@
 import 'package:citizen_watch/components/login_container.dart';
-import 'package:citizen_watch/screens/welcome_back_screen.dart';
+import 'package:citizen_watch/constants/app_state.dart';
+import 'package:citizen_watch/constants/web.dart';
+import 'package:citizen_watch/screens/home_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-class NewAccountScreen extends StatelessWidget {
-  final phone;
+class NewAccountScreen extends StatefulWidget {
+  final String phone;
 
-  const NewAccountScreen({Key key, this.phone}) : super(key: key);
+  const NewAccountScreen({this.phone});
+
+  @override
+  _NewAccountScreenState createState() => _NewAccountScreenState();
+}
+
+class _NewAccountScreenState extends State<NewAccountScreen> {
+  String password;
+  String confirmPassword;
+  String jwtToken;
+
   @override
   Widget build(BuildContext context) {
+    final appState = Provider.of<AppState>(context);
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: AppBar(backgroundColor: Colors.black),
@@ -21,14 +36,31 @@ class NewAccountScreen extends StatelessWidget {
                 "Set a password for your account, and you’re good to go!",
             isNewAccount: true,
             hintTextOne: "Password",
-            hintTextTwo: "ConfirmPassword",
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => WelcomeBackScreen(),
-                ),
-              );
+            hintTextTwo: "Confirm Password",
+            onChangedOne: (val) {
+              password = val;
+            },
+            onChangedTwo: (val) {
+              confirmPassword = val;
+            },
+            onPressed: () async {
+              final prefs = await SharedPreferences.getInstance();
+              if (password == confirmPassword) {
+                jwtToken = await runRegisterRequest(
+                  phone: widget.phone,
+                  password: password,
+                );
+              }
+              if (jwtToken != null) {
+                await prefs.setString('token', jwtToken);
+                appState.setJwtToken(jwtToken);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => HomeScreen(),
+                  ),
+                );
+              }
             },
           )
         ],

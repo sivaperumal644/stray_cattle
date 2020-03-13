@@ -3,9 +3,11 @@ import 'package:flutter/material.dart';
 class CustomTextField extends StatelessWidget {
   final String hintText;
   final TextEditingController controller;
+  final ValueChanged<String> onChanged;
   const CustomTextField({
     this.hintText,
     this.controller,
+    this.onChanged,
   });
 
   @override
@@ -17,9 +19,7 @@ class CustomTextField extends StatelessWidget {
       ),
       child: TextField(
         controller: controller,
-        onChanged: (text) {
-          print(text);
-        },
+        onChanged: onChanged,
         style: TextStyle(color: Colors.white.withOpacity(0.4)),
         decoration: InputDecoration(
           border: InputBorder.none,
