@@ -1,3 +1,4 @@
+import 'package:camera/camera.dart';
 import 'package:citizen_watch/components/login_container.dart';
 import 'package:citizen_watch/constants/app_state.dart';
 import 'package:citizen_watch/constants/web.dart';
@@ -8,8 +9,12 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class NewAccountScreen extends StatefulWidget {
   final String phone;
+  final CameraDescription camera;
 
-  const NewAccountScreen({this.phone});
+  const NewAccountScreen({
+    this.phone,
+    this.camera,
+  });
 
   @override
   _NewAccountScreenState createState() => _NewAccountScreenState();
@@ -57,7 +62,7 @@ class _NewAccountScreenState extends State<NewAccountScreen> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => HomeScreen(),
+                    builder: (context) => HomeScreen(camera: widget.camera),
                   ),
                 );
               }

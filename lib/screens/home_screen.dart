@@ -1,10 +1,19 @@
+import 'package:camera/camera.dart';
 import 'package:citizen_watch/components/report_button.dart';
 import 'package:citizen_watch/components/secondary_button.dart';
 import 'package:citizen_watch/screens/about_app_screen.dart';
-import 'package:citizen_watch/screens/report_screen.dart';
+import 'package:citizen_watch/screens/capture_image_screen.dart';
 import 'package:flutter/material.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
+  final CameraDescription camera;
+
+  const HomeScreen({this.camera});
+  @override
+  _HomeScreenState createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -59,7 +68,9 @@ class HomeScreen extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => ReportScreen(),
+                          builder: (context) => CaptureImageScreen(
+                            camera: widget.camera,
+                          ),
                         ),
                       );
                     },

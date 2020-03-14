@@ -1,5 +1,6 @@
 import 'package:citizen_watch/components/report_sending_container.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class ReportSendingScreen extends StatefulWidget {
   @override
@@ -21,6 +22,15 @@ class _ReportSendingScreenState extends State<ReportSendingScreen> {
         contentText = "We are working on it. Thank you for helping!";
       });
     });
+  }
+
+  @override
+  void dispose() {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.landscapeLeft,
+      DeviceOrientation.landscapeRight,
+    ]);
+    super.dispose();
   }
 
   @override

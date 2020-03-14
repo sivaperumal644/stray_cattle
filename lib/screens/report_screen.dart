@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:citizen_watch/components/primary_button.dart';
 import 'package:citizen_watch/components/tertiary_button.dart';
 import 'package:citizen_watch/screens/report_sending_screen.dart';
@@ -5,6 +7,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class ReportScreen extends StatefulWidget {
+  final String imagePath;
+
+  const ReportScreen({this.imagePath});
   @override
   _ReportScreenState createState() => _ReportScreenState();
 }
@@ -36,8 +41,8 @@ class _ReportScreenState extends State<ReportScreen> {
       body: Scaffold(
         body: Stack(
           children: <Widget>[
-            Image.asset(
-              'assets/images/placeholder.jpg',
+            Image.network(
+              widget.imagePath,
               width: double.infinity,
               height: double.infinity,
               fit: BoxFit.fill,

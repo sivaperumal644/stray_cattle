@@ -1,3 +1,4 @@
+import 'package:camera/camera.dart';
 import 'package:citizen_watch/screens/auth_screen.dart';
 import 'package:citizen_watch/screens/home_screen.dart';
 import 'package:flutter/material.dart';
@@ -5,14 +6,25 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'constants/app_state.dart';
 
-main() => runApp(
-      ChangeNotifierProvider<AppState>(
-        create: (context) => AppState(),
-        child: MyApp(),
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  final cameras = await availableCameras();
+  final firstCamera = cameras.first;
+  runApp(
+    ChangeNotifierProvider<AppState>(
+      create: (context) => AppState(),
+      child: MyApp(
+        camera: firstCamera,
       ),
-    );
+    ),
+  );
+}
 
 class MyApp extends StatefulWidget {
+  final CameraDescription camera;
+
+  const MyApp({this.camera});
   @override
   _MyAppState createState() => _MyAppState();
 }
@@ -28,7 +40,9 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(home: isAuthenticated ? HomeScreen() : AuthScreen());
+    return MaterialApp(
+        home:
+            isAuthenticated ? HomeScreen(camera: widget.camera) : AuthScreen());
   }
 
   getPref() async {

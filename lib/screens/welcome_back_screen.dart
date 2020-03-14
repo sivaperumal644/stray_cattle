@@ -1,3 +1,4 @@
+import 'package:camera/camera.dart';
 import 'package:citizen_watch/components/login_container.dart';
 import 'package:citizen_watch/constants/app_state.dart';
 import 'package:citizen_watch/constants/web.dart';
@@ -7,8 +8,12 @@ import 'package:provider/provider.dart';
 
 class WelcomeBackScreen extends StatefulWidget {
   final String phone;
+  final CameraDescription camera;
 
-  const WelcomeBackScreen({this.phone});
+  const WelcomeBackScreen({
+    this.phone,
+    this.camera,
+  });
   @override
   _WelcomeBackScreenState createState() => _WelcomeBackScreenState();
 }
@@ -38,13 +43,12 @@ class _WelcomeBackScreenState extends State<WelcomeBackScreen> {
                 phone: widget.phone,
                 password: password,
               );
-              print(jwtToken);
               if (jwtToken != null) {
                 appState.setJwtToken(jwtToken);
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => HomeScreen(),
+                    builder: (context) => HomeScreen(camera: widget.camera),
                   ),
                 );
               }

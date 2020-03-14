@@ -1,13 +1,16 @@
+import 'package:camera/camera.dart';
 import 'package:citizen_watch/components/login_container.dart';
-import 'package:citizen_watch/constants/app_state.dart';
 import 'package:citizen_watch/constants/web.dart';
 import 'package:citizen_watch/screens/new_account_screen.dart';
 import 'package:citizen_watch/screens/welcome_back_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:provider/provider.dart';
 
 class AuthScreen extends StatefulWidget {
+  final CameraDescription camera;
+
+  const AuthScreen({this.camera});
+
   @override
   _AuthScreenState createState() => _AuthScreenState();
 }
@@ -18,8 +21,6 @@ class _AuthScreenState extends State<AuthScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final appState = Provider.of<AppState>(context);
-
     return Scaffold(
       backgroundColor: Colors.black,
       body: ListView(
@@ -58,18 +59,22 @@ class _AuthScreenState extends State<AuthScreen> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) =>
-                          NewAccountScreen(phone: phoneNumber),
+                      builder: (context) => NewAccountScreen(
+                        phone: phoneNumber,
+                        camera: widget.camera,
+                      ),
                     ),
                   );
                 },
               );
-              print(jwt);
               if (jwt == null) {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => WelcomeBackScreen(phone: phoneNumber),
+                    builder: (context) => WelcomeBackScreen(
+                      phone: phoneNumber,
+                      camera: widget.camera,
+                    ),
                   ),
                 );
               }
