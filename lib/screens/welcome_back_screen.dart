@@ -5,6 +5,7 @@ import 'package:citizen_watch/constants/web.dart';
 import 'package:citizen_watch/screens/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class WelcomeBackScreen extends StatefulWidget {
   final String phone;
@@ -39,11 +40,13 @@ class _WelcomeBackScreenState extends State<WelcomeBackScreen> {
               password = val;
             },
             onPressed: () async {
+              final prefs = await SharedPreferences.getInstance();
               jwtToken = await runLoginRequest(
                 phone: widget.phone,
                 password: password,
               );
               if (jwtToken != null) {
+                await prefs.setString('token', jwtToken);
                 appState.setJwtToken(jwtToken);
                 Navigator.push(
                   context,

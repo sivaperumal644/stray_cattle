@@ -24,4 +24,6 @@ class AppState with ChangeNotifier {
     jwtToken = token;
     notifyListeners();
   }
+
+  get getJwtToken => jwtToken; 
 }

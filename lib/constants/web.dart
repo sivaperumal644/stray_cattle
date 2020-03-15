@@ -12,12 +12,13 @@ const BASE_URL = 'http://djangoproject-straycattle.herokuapp.com';
 Future<bool> runAddReportRequest(
     {ReportObject report, BuildContext context}) async {
   final appState = Provider.of<AppState>(context);
-  final jwtToken = appState.jwtToken;
+  final jwtToken = appState.getJwtToken;
+  print(jwtToken);
   print('=== Sending ADD REPORT REQUEST ===');
   http.Response response = await http.post('$BASE_URL/reports/add', body: {
-    'longitude': report.longitude,
-    'latitude': report.latitude,
-    'images': report.images
+    'longitude': report.longitude.toString(),
+    'latitude': report.latitude.toString(),
+    'images': jsonEncode(report.images)
   }, headers: {
     'authorization': 'Bearer $jwtToken'
   });
@@ -50,8 +51,7 @@ Future<String> runLoginRequest(
   return null;
 }
 
-Future<String> runRegisterRequest(
-    {String phone, String password}) async {
+Future<String> runRegisterRequest({String phone, String password}) async {
   print('=== Sending REGISTER REQUEST ===');
   http.Response response = await http.post('$BASE_URL/auth/register',
       body: {'phone': phone, 'password': password});

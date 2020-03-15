@@ -72,11 +72,12 @@ class _CaptureImageScreenState extends State<CaptureImageScreen> {
             await _controller.takePicture(path);
 
             FirebaseStorage storage = FirebaseStorage(
-                storageBucket: 'gs://electronic-mart.appspot.com/');
+                storageBucket: 'gs://citizen-watch-f823c.appspot.com');
             StorageReference storageReference = storage.ref();
             StorageReference imageReference =
-                storageReference.child('item$imgUrl/image.jpg');
-            StorageUploadTask storageUploadTask = imageReference.putFile(File(path));
+                storageReference.child('image$imgUrl/image.jpg');
+            StorageUploadTask storageUploadTask =
+                imageReference.putFile(File(path));
 
             await (await storageUploadTask.onComplete)
                 .ref
@@ -86,7 +87,7 @@ class _CaptureImageScreenState extends State<CaptureImageScreen> {
                 capturedImageUrl = url;
               });
             });
-
+            print(capturedImageUrl);
             Navigator.push(
               context,
               MaterialPageRoute(
