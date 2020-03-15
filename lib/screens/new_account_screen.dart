@@ -51,10 +51,12 @@ class _NewAccountScreenState extends State<NewAccountScreen> {
             onPressed: () async {
               final prefs = await SharedPreferences.getInstance();
               if (password == confirmPassword) {
+                appState.setIsRequestRunning(true);
                 jwtToken = await runRegisterRequest(
                   phone: widget.phone,
                   password: password,
                 );
+                appState.setIsRequestRunning(false);
               }
               if (jwtToken != null) {
                 await prefs.setString('token', jwtToken);

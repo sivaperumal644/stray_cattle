@@ -41,10 +41,13 @@ class _WelcomeBackScreenState extends State<WelcomeBackScreen> {
             },
             onPressed: () async {
               final prefs = await SharedPreferences.getInstance();
+              appState.setIsRequestRunning(true);
               jwtToken = await runLoginRequest(
                 phone: widget.phone,
                 password: password,
               );
+              appState.setIsRequestRunning(false);
+
               if (jwtToken != null) {
                 await prefs.setString('token', jwtToken);
                 appState.setJwtToken(jwtToken);

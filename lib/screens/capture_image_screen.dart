@@ -48,7 +48,9 @@ class _CaptureImageScreenState extends State<CaptureImageScreen> {
         future: _initializeControllerFuture,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
-            return CameraPreview(_controller);
+            return AspectRatio(
+                aspectRatio: _controller.value.aspectRatio,
+                child: CameraPreview(_controller));
           } else {
             return Center(child: CircularProgressIndicator());
           }

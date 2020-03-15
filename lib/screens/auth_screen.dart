@@ -1,10 +1,12 @@
 import 'package:camera/camera.dart';
 import 'package:citizen_watch/components/login_container.dart';
+import 'package:citizen_watch/constants/app_state.dart';
 import 'package:citizen_watch/constants/web.dart';
 import 'package:citizen_watch/screens/new_account_screen.dart';
 import 'package:citizen_watch/screens/welcome_back_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:provider/provider.dart';
 
 class AuthScreen extends StatefulWidget {
   final CameraDescription camera;
@@ -21,6 +23,7 @@ class _AuthScreenState extends State<AuthScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final appState = Provider.of<AppState>(context);
     return Scaffold(
       backgroundColor: Colors.black,
       body: ListView(
@@ -52,10 +55,13 @@ class _AuthScreenState extends State<AuthScreen> {
               });
             },
             onPressed: () async {
+              appState.setIsRequestRunning(true);
               jwt = await runLoginRequest(
                 phone: phoneNumber,
                 password: " ",
                 onUserNotExist: () {
+                  appState.setIsRequestRunning(false);
+
                   Navigator.push(
                     context,
                     MaterialPageRoute(
@@ -67,7 +73,11 @@ class _AuthScreenState extends State<AuthScreen> {
                   );
                 },
               );
+              appState.setIsRequestRunning(false);
+
               if (jwt == null) {
+                appState.setIsRequestRunning(false);
+
                 Navigator.push(
                   context,
                   MaterialPageRoute(

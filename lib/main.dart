@@ -4,6 +4,7 @@ import 'package:citizen_watch/screens/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'components/busy_indicator_wrapper.dart';
 import 'constants/app_state.dart';
 
 Future<void> main() async {
@@ -40,9 +41,12 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        home:
-            isAuthenticated ? HomeScreen(camera: widget.camera) : AuthScreen());
+    return BusyIndicatorWidget(
+      child: MaterialApp(
+          home: isAuthenticated
+              ? HomeScreen(camera: widget.camera)
+              : AuthScreen()),
+    );
   }
 
   getPref() async {

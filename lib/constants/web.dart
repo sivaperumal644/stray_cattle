@@ -35,6 +35,7 @@ Future<bool> runAddReportRequest(
 Future<String> runLoginRequest(
     {String phone, String password, Function onUserNotExist}) async {
   print('=== Sending LOGIN REQUEST ===');
+
   http.Response response = await http.post('$BASE_URL/auth/login',
       body: {'phone': phone, 'password': password});
   print('Response status: ${response.statusCode}');
