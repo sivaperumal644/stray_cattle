@@ -13,6 +13,9 @@ Future<bool> runAddReportRequest(
     {ReportObject report, BuildContext context}) async {
   final appState = Provider.of<AppState>(context);
   final jwtToken = appState.getJwtToken;
+  print(report.longitude.toString());
+  print(report.latitude.toString());
+  print(jsonEncode(report.images));
   print(jwtToken);
   print('=== Sending ADD REPORT REQUEST ===');
   http.Response response = await http.post('$BASE_URL/reports/add', body: {

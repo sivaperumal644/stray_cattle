@@ -1,4 +1,5 @@
 import 'package:camera/camera.dart';
+import 'package:citizen_watch/components/primary_button.dart';
 import 'package:citizen_watch/components/report_button.dart';
 import 'package:citizen_watch/components/secondary_button.dart';
 import 'package:citizen_watch/screens/about_app_screen.dart';
@@ -17,81 +18,120 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.black,
-        body: ListView(
-          children: <Widget>[
-            Container(
-              height: MediaQuery.of(context).size.height / 1.25,
-              width: double.infinity,
-              margin: EdgeInsets.fromLTRB(16, 110, 16, 10),
-              padding: EdgeInsets.symmetric(horizontal: 64),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(12),
-                border: Border.all(
-                  color: Colors.white.withOpacity(0.4),
-                ),
-              ),
-              child: Column(
-                children: <Widget>[
-                  Container(height: 40),
-                  Text(
-                    'Stray cows may disrupt traffic, but they also carry disease.',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: Colors.white.withOpacity(0.5),
-                    ),
-                  ),
-                  Container(height: 20),
-                  Text(
-                    'We want to save stray cows, give them proper shelter',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: Colors.white.withOpacity(0.5),
-                    ),
-                  ),
-                  Container(height: 60),
-                  Text(
-                    'If you spot them in your location,',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  Container(height: 20),
-                  ReportButton(
-                    buttonText: "REPORT IT",
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => CaptureImageScreen(
-                            camera: widget.camera,
-                          ),
-                        ),
-                      );
-                    },
-                  ),
-                  Spacer(),
-                  SecondaryButton(
-                    buttonText: "ABOUT APP",
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => AboutAppScreen(),
-                        ),
-                      );
-                    },
-                  ),
-                  Container(height: 20)
-                ],
+      backgroundColor: Colors.black,
+      body: ListView(
+        physics: BouncingScrollPhysics(),
+        children: <Widget>[
+          Container(
+            height: MediaQuery.of(context).size.height / 1.25,
+            width: double.infinity,
+            margin: EdgeInsets.fromLTRB(16, 110, 16, 10),
+            padding: EdgeInsets.symmetric(horizontal: 50),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(12),
+              border: Border.all(
+                color: Colors.white.withOpacity(0.4),
               ),
             ),
+            child: Column(
+              children: <Widget>[
+                Container(height: 40),
+                Text(
+                  'Stray cows may disrupt traffic, but they also carry disease.',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: Colors.white.withOpacity(0.5),
+                  ),
+                ),
+                Container(height: 20),
+                Text(
+                  'We want to save stray cows, give them proper shelter',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: Colors.white.withOpacity(0.5),
+                  ),
+                ),
+                Container(height: 60),
+                Text(
+                  'If you spot them in your location,',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                Container(height: 20),
+                ReportButton(
+                  buttonText: "REPORT IT",
+                  onPressed: () {
+                    displayAlertDialog(context);
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => CaptureImageScreen(
+                          camera: widget.camera,
+                        ),
+                      ),
+                    );
+                  },
+                ),
+                Spacer(),
+                SecondaryButton(
+                  buttonText: "ABOUT APP",
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => AboutAppScreen(),
+                      ),
+                    );
+                  },
+                ),
+                Container(height: 20)
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Future displayAlertDialog(BuildContext context) {
+    return showDialog(
+      barrierDismissible: false,
+      context: context,
+      builder: (_) => AlertDialog(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        backgroundColor: Colors.white,
+        title: Text(
+          'Capture in landscape mode',
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            color: Colors.orange,
+          ),
+        ),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            Text(
+              'Please capture the image keeping your device in landscape to send a nice image. Image taken by keeping the phone in portrait will not be visible clear and we might not accept the report.',
+              textAlign: TextAlign.center,
+              style: TextStyle(color: Colors.black),
+            ),
+            Container(height: 24),
+            PrimaryButton(
+              buttonText: 'OK',
+              onPressed: () {
+                Navigator.of(context, rootNavigator: true).pop('dialog');
+              },
+            )
           ],
-        ));
+        ),
+      ),
+    );
   }
 }

@@ -1,4 +1,5 @@
 import 'package:camera/camera.dart';
+import 'package:citizen_watch/components/display_connection_status_widget.dart';
 import 'package:citizen_watch/screens/auth_screen.dart';
 import 'package:citizen_watch/screens/home_screen.dart';
 import 'package:flutter/material.dart';
@@ -15,9 +16,7 @@ Future<void> main() async {
   runApp(
     ChangeNotifierProvider<AppState>(
       create: (context) => AppState(),
-      child: MyApp(
-        camera: firstCamera,
-      ),
+      child: MyApp(camera: firstCamera),
     ),
   );
 }
@@ -41,11 +40,14 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    return BusyIndicatorWidget(
-      child: MaterialApp(
+    return MaterialDisplayConnectionStatusOverlayWidget(
+      child: BusyIndicatorWidget(
+        child: MaterialApp(
           home: isAuthenticated
               ? HomeScreen(camera: widget.camera)
-              : AuthScreen()),
+              : AuthScreen(camera: widget.camera),
+        ),
+      ),
     );
   }
 

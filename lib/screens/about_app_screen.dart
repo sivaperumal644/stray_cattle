@@ -8,6 +8,7 @@ class AboutAppScreen extends StatelessWidget {
       appBar: AppBar(backgroundColor: Colors.black),
       backgroundColor: Colors.black,
       body: ListView(
+        physics: BouncingScrollPhysics(),
         children: <Widget>[
           Container(height: 36),
           AboutAppContainer(),

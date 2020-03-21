@@ -1,17 +1,25 @@
-import 'dart:io';
-
+import 'package:android_intent/android_intent.dart';
+import 'package:camera/camera.dart';
 import 'package:citizen_watch/components/primary_button.dart';
 import 'package:citizen_watch/components/tertiary_button.dart';
+import 'package:citizen_watch/constants/app_state.dart';
 import 'package:citizen_watch/models/report.dart';
+import 'package:citizen_watch/screens/capture_image_screen.dart';
 import 'package:citizen_watch/screens/report_sending_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'package:provider/provider.dart';
 
 class ReportScreen extends StatefulWidget {
   final String imagePath;
+  final CameraDescription camera;
 
-  const ReportScreen({this.imagePath});
+  const ReportScreen({
+    this.imagePath,
+    this.camera,
+  });
   @override
   _ReportScreenState createState() => _ReportScreenState();
 }
@@ -41,6 +49,7 @@ class _ReportScreenState extends State<ReportScreen> {
   Widget build(BuildContext context) {
     ReportObject report;
     List<String> images = new List<String>();
+    final appState = Provider.of<AppState>(context);
     return Scaffold(
       body: Scaffold(
         body: Stack(
@@ -67,19 +76,34 @@ class _ReportScreenState extends State<ReportScreen> {
                       TertiaryButton(
                         buttonText: "DISCARD",
                         onPressed: () {
-                          Navigator.pop(context);
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  CaptureImageScreen(camera: widget.camera),
+                            ),
+                          );
                         },
                       ),
                       Container(width: 30, height: 0),
                       PrimaryButton(
                         buttonText: "Continue",
                         onPressed: () async {
+                          appState.setIsRequestRunning(true);
                           print("clicked");
+                          ServiceStatus serviceStatus =
+                              await PermissionHandler()
+                                  .checkServiceStatus(PermissionGroup.location);
+                          bool enabled =
+                              (serviceStatus == ServiceStatus.enabled);
+                          if (!enabled) openLocationSetting();
                           print(widget.imagePath);
+
                           Position position =
                               await Geolocator().getCurrentPosition(
                             desiredAccuracy: LocationAccuracy.high,
                           );
+
                           print("latitude-" +
                               position.latitude.toString() +
                               " / longitude-" +
@@ -99,7 +123,8 @@ class _ReportScreenState extends State<ReportScreen> {
                           print(report.longitude);
                           print(report.latitude);
                           print(report.images);
-                          Navigator.push(
+                          appState.setIsRequestRunning(false);
+                          Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
                               builder: (context) =>
@@ -118,5 +143,12 @@ class _ReportScreenState extends State<ReportScreen> {
         ),
       ),
     );
+  }
+
+  void openLocationSetting() async {
+    final AndroidIntent intent = new AndroidIntent(
+      action: 'android.settings.LOCATION_SOURCE_SETTINGS',
+    );
+    await intent.launch();
   }
 }

@@ -32,6 +32,7 @@ class _NewAccountScreenState extends State<NewAccountScreen> {
       backgroundColor: Colors.black,
       appBar: AppBar(backgroundColor: Colors.black),
       body: ListView(
+        physics: BouncingScrollPhysics(),
         children: <Widget>[
           Container(height: 50),
           LoginContainer(

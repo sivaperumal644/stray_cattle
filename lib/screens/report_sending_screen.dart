@@ -22,31 +22,42 @@ class _ReportSendingScreenState extends State<ReportSendingScreen> {
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.landscapeLeft,
       DeviceOrientation.landscapeRight,
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
     ]);
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    bool isAddReportSuccess = false;
-    print(widget.report.longitude);
-    runAddReportRequest(report: widget.report, context: context)
-        .then((isSuccess) {
-      isAddReportSuccess = isSuccess;
-    });
-    if (isAddReportSuccess) {
-      setState(() {
-        isReported = true;
-        headerText = "Your report has been submitted.";
-        contentText = "We are working on it. Thank you for helping!";
-      });
-    }
     return Scaffold(
       backgroundColor: Colors.black,
-      body: ReportSendingContainer(
-        headerText: headerText,
-        contextText: contentText,
-        isReported: isReported,
+      body: FutureBuilder<bool>(
+        future: runAddReportRequest(report: widget.report, context: context),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            if (snapshot.data) {
+              return ReportSendingContainer(
+                headerText: "Your report has been submitted.",
+                contextText: "We are working on it. Thank you for helping!",
+                isReported: true,
+              );
+            } else {
+              return ReportSendingContainer(
+                headerText: "Could not send report",
+                contextText:
+                    "We could not receive your report due to some error. Try sending it again.",
+                isReported: false,
+              );
+            }
+          } else {
+            return ReportSendingContainer(
+              headerText: "We’re sending your report, please wait...",
+              contextText: "This may take a moment",
+              isReported: false,
+            );
+          }
+        },
       ),
     );
   }

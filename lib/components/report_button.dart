@@ -16,6 +16,7 @@ class ReportButton extends StatelessWidget {
       color: BLUEBERRY_COLOR,
       child: Text(
         buttonText,
+        textAlign: TextAlign.center,
         style: TextStyle(
           color: Colors.white,
           fontSize: 24,

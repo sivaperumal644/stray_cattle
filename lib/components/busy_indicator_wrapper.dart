@@ -35,7 +35,7 @@ class BusyIndicatorWidget extends StatelessWidget {
           AnimatedContainer(
             curve: Curves.easeInOut,
             duration: animationDuration,
-            child: Column(
+            child: appState.getIsRequestRunning ? Column(
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.end,
               children: <Widget>[
@@ -68,7 +68,7 @@ class BusyIndicatorWidget extends StatelessWidget {
                   ),
                 )
               ],
-            ),
+            ):Container(),
           )
         ]),
       ),
