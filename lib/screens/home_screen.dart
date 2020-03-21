@@ -29,7 +29,7 @@ class _HomeScreenState extends State<HomeScreen> {
             height: MediaQuery.of(context).size.height / 1.25,
             width: double.infinity,
             margin: EdgeInsets.fromLTRB(16, 110, 16, 10),
-            padding: EdgeInsets.symmetric(horizontal: 50),
+            padding: EdgeInsets.symmetric(horizontal: 30),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(12),
               border: Border.all(
@@ -39,21 +39,27 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Column(
               children: <Widget>[
                 Container(height: 40),
-                Text(
-                  'Stray cows may disrupt traffic, but they also carry disease.',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 16,
-                    color: Colors.white.withOpacity(0.5),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 30),
+                  child: Text(
+                    'Stray cows may disrupt traffic, but they also carry disease.',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: Colors.white.withOpacity(0.5),
+                    ),
                   ),
                 ),
                 Container(height: 20),
-                Text(
-                  'We want to save stray cows, give them proper shelter',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 16,
-                    color: Colors.white.withOpacity(0.5),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 30),
+                  child: Text(
+                    'We want to save stray cows, give them proper shelter',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: Colors.white.withOpacity(0.5),
+                    ),
                   ),
                 ),
                 Container(height: 60),
@@ -112,7 +118,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ],
                 ),
-                Container(height: 20)
+                Container(height: 30)
               ],
             ),
           ),
