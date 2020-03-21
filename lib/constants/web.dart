@@ -52,7 +52,7 @@ Future<String> runLoginRequest(
       return responseData['error']['code'];
     }
   }
-  return null;
+  return responseData['error']['code'];
 }
 
 Future<String> runRegisterRequest({String phone, String password}) async {

@@ -4,10 +4,13 @@ class CustomTextField extends StatelessWidget {
   final String hintText;
   final TextEditingController controller;
   final ValueChanged<String> onChanged;
+  final TextInputType keyboardType;
+  final bool obscureText;
   const CustomTextField({
     this.hintText,
     this.controller,
     this.onChanged,
+    this.keyboardType, this.obscureText,
   });
 
   @override
@@ -20,6 +23,8 @@ class CustomTextField extends StatelessWidget {
       child: TextField(
         controller: controller,
         onChanged: onChanged,
+        keyboardType: keyboardType,
+        obscureText: obscureText,
         style: TextStyle(color: Colors.white.withOpacity(0.4)),
         decoration: InputDecoration(
           border: InputBorder.none,

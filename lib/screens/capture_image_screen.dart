@@ -52,7 +52,7 @@ class _CaptureImageScreenState extends State<CaptureImageScreen> {
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
             return Transform.scale(
-              scale: _controller.value.aspectRatio / deviceRatio+0.14,
+              scale: _controller.value.aspectRatio / deviceRatio + 0.14,
               child: Center(
                 child: AspectRatio(
                     aspectRatio: _controller.value.aspectRatio,
@@ -98,7 +98,6 @@ class _CaptureImageScreenState extends State<CaptureImageScreen> {
                 capturedImageUrl = url;
               });
             });
-            print(capturedImageUrl);
             appState.setIsRequestRunning(false);
             Navigator.pushReplacement(
               context,
@@ -109,9 +108,7 @@ class _CaptureImageScreenState extends State<CaptureImageScreen> {
                 ),
               ),
             );
-          } catch (e) {
-            print(e);
-          }
+          } catch (e) {}
         },
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,

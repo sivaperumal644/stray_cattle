@@ -90,24 +90,18 @@ class _ReportScreenState extends State<ReportScreen> {
                         buttonText: "Continue",
                         onPressed: () async {
                           appState.setIsRequestRunning(true);
-                          print("clicked");
                           ServiceStatus serviceStatus =
                               await PermissionHandler()
                                   .checkServiceStatus(PermissionGroup.location);
                           bool enabled =
                               (serviceStatus == ServiceStatus.enabled);
                           if (!enabled) openLocationSetting();
-                          print(widget.imagePath);
 
                           Position position =
                               await Geolocator().getCurrentPosition(
                             desiredAccuracy: LocationAccuracy.high,
                           );
 
-                          print("latitude-" +
-                              position.latitude.toString() +
-                              " / longitude-" +
-                              position.longitude.toString());
                           SystemChrome.setPreferredOrientations([
                             DeviceOrientation.landscapeLeft,
                             DeviceOrientation.landscapeRight,
@@ -120,9 +114,6 @@ class _ReportScreenState extends State<ReportScreen> {
                             latitude: position.latitude,
                             longitude: position.longitude,
                           );
-                          print(report.longitude);
-                          print(report.latitude);
-                          print(report.images);
                           appState.setIsRequestRunning(false);
                           Navigator.pushReplacement(
                             context,

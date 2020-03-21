@@ -5,6 +5,9 @@ import 'package:citizen_watch/components/secondary_button.dart';
 import 'package:citizen_watch/screens/about_app_screen.dart';
 import 'package:citizen_watch/screens/capture_image_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import 'auth_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   final CameraDescription camera;
@@ -79,16 +82,35 @@ class _HomeScreenState extends State<HomeScreen> {
                   },
                 ),
                 Spacer(),
-                SecondaryButton(
-                  buttonText: "ABOUT APP",
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => AboutAppScreen(),
-                      ),
-                    );
-                  },
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    SecondaryButton(
+                      buttonText: "ABOUT APP",
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => AboutAppScreen(),
+                          ),
+                        );
+                      },
+                    ),
+                    SecondaryButton(
+                      buttonText: "  LOG OUT  ",
+                      onPressed: () async {
+                        final prefs = await SharedPreferences.getInstance();
+                        await prefs.clear();
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                AuthScreen(camera: widget.camera),
+                          ),
+                        );
+                      },
+                    ),
+                  ],
                 ),
                 Container(height: 20)
               ],

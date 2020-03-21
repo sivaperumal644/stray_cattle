@@ -43,6 +43,8 @@ class _NewAccountScreenState extends State<NewAccountScreen> {
             isNewAccount: true,
             hintTextOne: "Password",
             hintTextTwo: "Confirm Password",
+            obscureTextOne: true,
+            obscureTextTwo: true,
             onChangedOne: (val) {
               password = val;
             },
@@ -50,24 +52,37 @@ class _NewAccountScreenState extends State<NewAccountScreen> {
               confirmPassword = val;
             },
             onPressed: () async {
-              final prefs = await SharedPreferences.getInstance();
-              if (password == confirmPassword) {
+              if (password.length < 8) {
+                final snackBar = SnackBar(
+                  content: Text('Password should have atleast 8 characters'),
+                  backgroundColor: Colors.grey,
+                );
+                Scaffold.of(context).showSnackBar(snackBar);
+              } else if (password != confirmPassword) {
+                final snackBar = SnackBar(
+                  content: Text(
+                      'Password and confirm password do not match. Try Again.'),
+                  backgroundColor: Colors.grey,
+                );
+                Scaffold.of(context).showSnackBar(snackBar);
+              } else {
+                final prefs = await SharedPreferences.getInstance();
                 appState.setIsRequestRunning(true);
                 jwtToken = await runRegisterRequest(
                   phone: widget.phone,
                   password: password,
                 );
                 appState.setIsRequestRunning(false);
-              }
-              if (jwtToken != null) {
-                await prefs.setString('token', jwtToken);
-                appState.setJwtToken(jwtToken);
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => HomeScreen(camera: widget.camera),
-                  ),
-                );
+                if (jwtToken != null) {
+                  await prefs.setString('token', jwtToken);
+                  appState.setJwtToken(jwtToken);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => HomeScreen(camera: widget.camera),
+                    ),
+                  );
+                }
               }
             },
           )

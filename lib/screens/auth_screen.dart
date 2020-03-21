@@ -49,44 +49,53 @@ class _AuthScreenState extends State<AuthScreen> {
             contentTextTwo:
                 "If you don’t have an account, it will be created for you.",
             hintTextOne: "Phone Number",
+            keyboardTypeOne: TextInputType.phone,
             onChangedOne: (val) {
               setState(() {
                 phoneNumber = val;
               });
             },
             onPressed: () async {
-              appState.setIsRequestRunning(true);
-              jwt = await runLoginRequest(
-                phone: phoneNumber,
-                password: " ",
-                onUserNotExist: () {
+              if (phoneNumber.length != 10) {
+                final snackBar = SnackBar(
+                  content: Text('Enter a valid 10 digit mobile number'),
+                  backgroundColor: Colors.grey,
+                );
+                Scaffold.of(context).showSnackBar(snackBar);
+              } else {
+                appState.setIsRequestRunning(true);
+                jwt = await runLoginRequest(
+                  phone: phoneNumber,
+                  password: " ",
+                  onUserNotExist: () {
+                    appState.setIsRequestRunning(false);
+
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => NewAccountScreen(
+                          phone: phoneNumber,
+                          camera: widget.camera,
+                        ),
+                      ),
+                    );
+                  },
+                );
+                appState.setIsRequestRunning(false);
+
+                if (jwt == "INVALID_PASSWORD") {
                   appState.setIsRequestRunning(false);
 
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => NewAccountScreen(
+                      builder: (context) => WelcomeBackScreen(
                         phone: phoneNumber,
                         camera: widget.camera,
                       ),
                     ),
                   );
-                },
-              );
-              appState.setIsRequestRunning(false);
-
-              if (jwt == null) {
-                appState.setIsRequestRunning(false);
-
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => WelcomeBackScreen(
-                      phone: phoneNumber,
-                      camera: widget.camera,
-                    ),
-                  ),
-                );
+                }
               }
             },
           )

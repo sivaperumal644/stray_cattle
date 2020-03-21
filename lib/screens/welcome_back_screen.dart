@@ -36,6 +36,7 @@ class _WelcomeBackScreenState extends State<WelcomeBackScreen> {
             headerText: "Welcome Back",
             contentTextOne: "Please enter your password to continue",
             contentTextTwo: "",
+            obscureTextOne: true,
             hintTextOne: "Password",
             onChangedOne: (val) {
               password = val;
@@ -48,8 +49,8 @@ class _WelcomeBackScreenState extends State<WelcomeBackScreen> {
                 password: password,
               );
               appState.setIsRequestRunning(false);
-
-              if (jwtToken != null) {
+              print("inside the welcome screen : " + jwtToken.toString());
+              if (jwtToken != "INVALID_PASSWORD") {
                 await prefs.setString('token', jwtToken);
                 appState.setJwtToken(jwtToken);
                 Navigator.push(
@@ -58,6 +59,13 @@ class _WelcomeBackScreenState extends State<WelcomeBackScreen> {
                     builder: (context) => HomeScreen(camera: widget.camera),
                   ),
                 );
+              } else {
+                final snackBar = SnackBar(
+                  content: Text(
+                      'Invalid password, Check your password and try again.'),
+                  backgroundColor: Colors.grey,
+                );
+                Scaffold.of(context).showSnackBar(snackBar);
               }
             },
           )

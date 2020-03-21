@@ -10,10 +10,14 @@ class LoginContainer extends StatefulWidget {
   final String contentTextTwo;
   final String hintTextOne;
   final String hintTextTwo;
+  final TextInputType keyboardTypeOne;
+  final TextInputType keyboardTypeTwo;
   final bool isNewAccount;
   final Function onPressed;
   final ValueChanged<String> onChangedOne;
   final ValueChanged<String> onChangedTwo;
+  final bool obscureTextOne;
+  final bool obscureTextTwo;
 
   const LoginContainer({
     this.headerText,
@@ -25,6 +29,10 @@ class LoginContainer extends StatefulWidget {
     this.isNewAccount = false,
     this.onChangedOne,
     this.onChangedTwo,
+    this.keyboardTypeOne,
+    this.keyboardTypeTwo,
+    this.obscureTextOne = false,
+    this.obscureTextTwo = false,
   });
 
   @override
@@ -68,12 +76,16 @@ class _LoginContainerState extends State<LoginContainer> {
             CustomTextField(
               hintText: widget.hintTextOne,
               onChanged: widget.onChangedOne,
+              keyboardType: widget.keyboardTypeOne,
+              obscureText: widget.obscureTextOne,
             ),
             Container(height: 20),
             widget.isNewAccount
                 ? CustomTextField(
                     hintText: widget.hintTextTwo,
                     onChanged: widget.onChangedTwo,
+                    keyboardType: widget.keyboardTypeTwo,
+                    obscureText: widget.obscureTextTwo,
                   )
                 : Container(),
             widget.isNewAccount ? Container(height: 20) : Container(),
