@@ -119,7 +119,7 @@ class _ReportScreenState extends State<ReportScreen> {
                             context,
                             MaterialPageRoute(
                               builder: (context) =>
-                                  ReportSendingScreen(report: report),
+                                  ReportSendingScreen(report: report, camera:widget.camera,),
                             ),
                           );
                         },

@@ -1,14 +1,21 @@
+import 'package:camera/camera.dart';
+import 'package:citizen_watch/components/report_button.dart';
+import 'package:citizen_watch/screens/home_screen.dart';
 import 'package:flutter/material.dart';
 
 class ReportSendingContainer extends StatelessWidget {
   final bool isReported;
   final String headerText;
   final String contextText;
+  final CameraDescription camera;
+  final bool onComplete;
 
   const ReportSendingContainer({
     this.isReported = false,
     this.headerText,
     this.contextText,
+    this.camera,
+    this.onComplete = true,
   });
 
   @override
@@ -54,6 +61,24 @@ class ReportSendingContainer extends StatelessWidget {
               fontSize: 16,
             ),
           ),
+          Container(height: 36),
+          // PrimaryButton(
+          //   buttonText: 'OK',
+          //   onPressed: () {},
+          // )
+          onComplete
+              ? ReportButton(
+                  buttonText: 'OK',
+                  onPressed: () {
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => HomeScreen(camera: camera),
+                      ),
+                    );
+                  },
+                )
+              : Container()
         ],
       ),
     );
