@@ -27,6 +27,7 @@ apply plugin: 'kotlin-android'
 apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 
 android {
+    flavorDimensions "default"
     compileSdkVersion 28
 
     sourceSets {
@@ -52,6 +53,22 @@ android {
             // TODO: Add your own signing config for the release build.
             // Signing with the debug keys for now, so `flutter run --release` works.
             signingConfig signingConfigs.debug
+        }
+    }
+
+    productFlavors {
+        citizen {
+            manifestPlaceholders = [
+                app_name:  "Citizen Watch"
+            ]
+
+        }
+        staff {
+            applicationIdSuffix ".staff"
+            manifestPlaceholders = [
+                app_name:  "Citizen Watch - Staff"
+            ]
+
         }
     }
 }

@@ -1,0 +1,25 @@
+{
+    "version": "0.1.0",
+    "configurations": [
+        {
+            "name": "Flutter citizen",
+            "request": "launch",
+            "type": "dart",
+            "args": [
+                "--flavor",
+                "citizen"
+            ],
+            "program": "lib/main-citizen.dart"
+        },
+        {
+            "name": "Flutter staff",
+            "request": "launch",
+            "type": "dart",
+            "args": [
+                "--flavor",
+                "staff"
+            ],
+            "program": "lib/main-staff.dart"
+        },
+    ]
+}

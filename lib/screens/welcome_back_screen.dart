@@ -2,7 +2,9 @@ import 'package:camera/camera.dart';
 import 'package:citizen_watch/components/login_container.dart';
 import 'package:citizen_watch/constants/app_state.dart';
 import 'package:citizen_watch/constants/web.dart';
+import 'package:citizen_watch/flavor.dart';
 import 'package:citizen_watch/screens/home_screen.dart';
+import 'package:citizen_watch/screens/report_list_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -42,30 +44,46 @@ class _WelcomeBackScreenState extends State<WelcomeBackScreen> {
               password = val;
             },
             onPressed: () async {
-              final prefs = await SharedPreferences.getInstance();
-              appState.setIsRequestRunning(true);
-              jwtToken = await runLoginRequest(
-                phone: widget.phone,
-                password: password,
+              final snackBar = SnackBar(
+                content: Text(
+                    'Invalid password, Check your password and try again.'),
+                backgroundColor: Colors.grey,
               );
-              appState.setIsRequestRunning(false);
-              print("inside the welcome screen : " + jwtToken.toString());
-              if (jwtToken != "INVALID_PASSWORD") {
-                await prefs.setString('token', jwtToken);
-                appState.setJwtToken(jwtToken);
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => HomeScreen(camera: widget.camera),
-                  ),
+              final prefs = await SharedPreferences.getInstance();
+              if (env.flavor == BuildFlavor.citizen) {
+                appState.setIsRequestRunning(true);
+                jwtToken = await runLoginRequest(
+                  phone: widget.phone,
+                  password: password,
                 );
-              } else {
-                final snackBar = SnackBar(
-                  content: Text(
-                      'Invalid password, Check your password and try again.'),
-                  backgroundColor: Colors.grey,
-                );
-                Scaffold.of(context).showSnackBar(snackBar);
+                appState.setIsRequestRunning(false);
+                print("inside the welcome screen : " + jwtToken.toString());
+                if (jwtToken != "INVALID_PASSWORD") {
+                  await prefs.setString('token', jwtToken);
+                  appState.setJwtToken(jwtToken);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => HomeScreen(camera: widget.camera),
+                    ),
+                  );
+                } else {
+                  Scaffold.of(context).showSnackBar(snackBar);
+                }
+              } else if (env.flavor == BuildFlavor.staff) {
+                if (password == "password") {
+                  appState.setIsRequestRunning(true);
+                  await prefs.setString('token', "adminJwtToken");
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => ReportListScreen(),
+                    ),
+                  );
+                  appState.setIsRequestRunning(false);
+                } else {
+                  Scaffold.of(context).showSnackBar(snackBar);
+                }
               }
             },
           )

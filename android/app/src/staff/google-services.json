@@ -1,0 +1,69 @@
+{
+  "project_info": {
+    "project_number": "798361590260",
+    "firebase_url": "https://citizen-watch-f823c.firebaseio.com",
+    "project_id": "citizen-watch-f823c",
+    "storage_bucket": "citizen-watch-f823c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:798361590260:android:0864f31802c30ceed941a1",
+        "android_client_info": {
+          "package_name": "com.example.citizen_watch"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "798361590260-86f314blrmn91gi6ss7cen4ubfp6i41k.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA0St0kyofQ5kxxrIpSMhGYNMxeefeUcbU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "798361590260-86f314blrmn91gi6ss7cen4ubfp6i41k.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:798361590260:android:a3c9b5bbbe57f019d941a1",
+        "android_client_info": {
+          "package_name": "com.example.citizen_watch.staff"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "798361590260-86f314blrmn91gi6ss7cen4ubfp6i41k.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA0St0kyofQ5kxxrIpSMhGYNMxeefeUcbU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "798361590260-86f314blrmn91gi6ss7cen4ubfp6i41k.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

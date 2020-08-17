@@ -2,6 +2,7 @@ import 'package:camera/camera.dart';
 import 'package:citizen_watch/components/login_container.dart';
 import 'package:citizen_watch/constants/app_state.dart';
 import 'package:citizen_watch/constants/web.dart';
+import 'package:citizen_watch/flavor.dart';
 import 'package:citizen_watch/screens/new_account_screen.dart';
 import 'package:citizen_watch/screens/welcome_back_screen.dart';
 import 'package:flutter/material.dart';
@@ -63,38 +64,59 @@ class _AuthScreenState extends State<AuthScreen> {
                 );
                 Scaffold.of(context).showSnackBar(snackBar);
               } else {
-                appState.setIsRequestRunning(true);
-                jwt = await runLoginRequest(
-                  phone: phoneNumber,
-                  password: " ",
-                  onUserNotExist: () {
+                if (env.flavor == BuildFlavor.citizen) {
+                  appState.setIsRequestRunning(true);
+                  jwt = await runLoginRequest(
+                    phone: phoneNumber,
+                    password: " ",
+                    onUserNotExist: () {
+                      appState.setIsRequestRunning(false);
+
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => NewAccountScreen(
+                            phone: phoneNumber,
+                            camera: widget.camera,
+                          ),
+                        ),
+                      );
+                    },
+                  );
+                  appState.setIsRequestRunning(false);
+
+                  if (jwt == "INVALID_PASSWORD") {
                     appState.setIsRequestRunning(false);
 
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => NewAccountScreen(
+                        builder: (context) => WelcomeBackScreen(
                           phone: phoneNumber,
                           camera: widget.camera,
                         ),
                       ),
                     );
-                  },
-                );
-                appState.setIsRequestRunning(false);
+                  }
+                }
 
-                if (jwt == "INVALID_PASSWORD") {
-                  appState.setIsRequestRunning(false);
-
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => WelcomeBackScreen(
-                        phone: phoneNumber,
-                        camera: widget.camera,
+                if (env.flavor == BuildFlavor.staff) {
+                  if (phoneNumber == "1234567890") {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => WelcomeBackScreen(
+                          phone: phoneNumber,
+                        ),
                       ),
-                    ),
-                  );
+                    );
+                  } else {
+                    final snackBar = SnackBar(
+                      content: Text('Enter a valid admin phone number'),
+                      backgroundColor: Colors.grey,
+                    );
+                    Scaffold.of(context).showSnackBar(snackBar);
+                  }
                 }
               }
             },
