@@ -1,7 +1,6 @@
 import 'package:citizen_watch/constants/web.dart';
 import 'package:citizen_watch/models/address.dart';
 import 'package:citizen_watch/models/report.dart';
-import 'package:citizen_watch/screens/location_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 

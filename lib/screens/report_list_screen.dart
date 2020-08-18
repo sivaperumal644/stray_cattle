@@ -55,7 +55,6 @@ class _ReportListScreenState extends State<ReportListScreen> {
                 )
               : reports.length > 0
                   ? ListView.builder(
-                      reverse: true,
                       itemCount: reports.length,
                       padding: EdgeInsets.symmetric(vertical: 16),
                       itemBuilder: (BuildContext context, int index) {
@@ -143,11 +142,15 @@ class _ReportListScreenState extends State<ReportListScreen> {
             color: Colors.white.withOpacity(0.5),
           ),
         ),
-        Text(
-          value,
-          style: TextStyle(
-            fontSize: 16,
-            color: Colors.white,
+        Container(
+          width: MediaQuery.of(context).size.width * 0.25,
+          child: Text(
+            value,
+            maxLines: 1,
+            style: TextStyle(
+              fontSize: 16,
+              color: Colors.white,
+            ),
           ),
         )
       ],
@@ -156,6 +159,7 @@ class _ReportListScreenState extends State<ReportListScreen> {
 
   Future<void> getReportList() async {
     reports = await runGetReportList();
+    reports = reports.reversed.toList();
     setState(() {});
   }
 
