@@ -21,6 +21,8 @@ class AuthScreen extends StatefulWidget {
 class _AuthScreenState extends State<AuthScreen> {
   String phoneNumber = "";
   String jwt;
+  static bool isCitizen = env.flavor == BuildFlavor.citizen;
+  String name = isCitizen ? 'CITIZEN' : 'STAFF';
 
   @override
   Widget build(BuildContext context) {
@@ -35,6 +37,16 @@ class _AuthScreenState extends State<AuthScreen> {
             padding: const EdgeInsets.only(top: 36.0),
             child: SvgPicture.asset('assets/images/app_name.svg'),
           ),
+          SizedBox(height: 16),
+          Text(
+            name,
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 24,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
           Container(height: 50),
           Center(
             child: Text(
@@ -46,9 +58,12 @@ class _AuthScreenState extends State<AuthScreen> {
           Container(height: 24),
           LoginContainer(
             headerText: "Let’s get started",
-            contentTextOne: "Please enter your phone number to login. ",
-            contentTextTwo:
-                "If you don’t have an account, it will be created for you.",
+            contentTextOne: isCitizen
+                ? "Please enter your phone number to login. "
+                : "Please Enter admin phone number to login.",
+            contentTextTwo: isCitizen
+                ? "If you don’t have an account, it will be created for you."
+                : "Only Admin and staffs can access, citizen accounts cannot be used here.",
             hintTextOne: "Phone Number",
             keyboardTypeOne: TextInputType.phone,
             onChangedOne: (val) {

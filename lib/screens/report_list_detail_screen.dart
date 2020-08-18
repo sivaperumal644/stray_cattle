@@ -55,6 +55,7 @@ class _ReportListDetailsScreenState extends State<ReportListDetailsScreen> {
           address == null
               ? Center(child: CircularProgressIndicator())
               : ListView(
+                  physics: BouncingScrollPhysics(),
                   children: <Widget>[
                     ClipRRect(
                       borderRadius: BorderRadius.only(

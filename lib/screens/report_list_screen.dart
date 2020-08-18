@@ -57,6 +57,7 @@ class _ReportListScreenState extends State<ReportListScreen> {
                   ? ListView.builder(
                       itemCount: reports.length,
                       padding: EdgeInsets.symmetric(vertical: 16),
+                      physics: BouncingScrollPhysics(),
                       itemBuilder: (BuildContext context, int index) {
                         return reportListItem(reports[index], index);
                       })
